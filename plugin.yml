@@ -1,0 +1,22 @@
+﻿name: LTSleepNStorm
+description: Modifies the sleeping system of Minecraft.
+version: 0.2.3
+api-version: 1.13
+load: STARTUP
+author: leothawne
+website: https://www.spigotmc.org/resources/64315/
+url: https://www.spigotmc.org/resources/64315/
+main: io.github.leothawne.LTSleepNStorm.LTSleepNStorm
+database: false
+commands:
+    sleepnstorm:
+        description: A LT Sleep N Storm command.
+        aliases: [sns]
+        usage: /<command>
+permissions:
+    LTSleepNStorm.use:
+        description: A LT Sleep N Storm permission node.
+        default: true
+    LTSleepNStorm.admin:
+        description: A LT Sleep N Storm permission node.
+        default: op

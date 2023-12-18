@@ -1,0 +1,16 @@
+no-permission: "You can't do that! You don't have permission."
+world-not-found: "% does not exist or it was not loaded."
+world-blocked: "The typed world is not present on the worlds list."
+world-day-tag: "Day "
+world-day-reset: "The world has regressed in time."
+world-night-passed: "% slept and the night has passed."
+world-storm-passed: "% slept and the storm has passed."
+world-night-storm-passed: "% slept and both night and storm has passed."
+world-environment-error: "You cannot do that on a % environment!"
+player-tma: "Too many arguments."
+player-error: "You must be a player to do that."
+nearby-monsters: "You may not rest now, there are monsters nearby."
+bed-obstructed: "The bed is obstructed!"
+
+#Do not change this under any circumstances!
+language-version: 3

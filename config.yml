@@ -1,0 +1,19 @@
+#Enables/disables this plugin. Default: true.
+enable-plugin: true
+
+#Official translations available: "portuguese", "english". Default: "english".
+language: "english"
+
+#Should administrators be warned about new updates? Default: true.
+update:
+    check: true
+
+#Allowed worlds (NETHER and THE_END environments are forbidden/won't work).
+worlds:
+    - "world"
+
+#Enables/disables the lightning strike effect (w/ sounds). Default: true.
+use-effects: true
+
+#Do not change this under any circumstances!
+config-version: 4

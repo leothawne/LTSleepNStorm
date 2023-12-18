@@ -1,0 +1,16 @@
+no-permission: "Você não pode fazer isso! Você não tem permissão."
+world-not-found: "% não existe ou não foi carregado."
+world-blocked: "O mundo digitado não está presente na lista de mundos."
+world-day-tag: "Dia "
+world-day-reset: "O mundo regrediu no tempo."
+world-night-passed: "% dormiu e a noite passou."
+world-storm-passed: "% dormiu e a tempestade passou."
+world-night-storm-passed: "% dormiu e ambas noite e tempestade passaram."
+world-environment-error: "Você não pode fazer isso em um ambiente %!"
+player-tma: "Muitos argumentos inseridos."
+player-error: "Você deve ser um jogador para fazer isso."
+nearby-monsters: "Você não pode dormir agora, há monstros por perto."
+bed-obstructed: "A cama está obstruída!"
+
+#Não mude isso sob nenhuma circunstância!
+language-version: 3
