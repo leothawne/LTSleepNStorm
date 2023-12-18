@@ -2,13 +2,11 @@ package io.github.leothawne.LTSleepNStorm.api;
 
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitScheduler;
 
 import io.github.leothawne.LTSleepNStorm.LTSleepNStorm;
-import io.github.leothawne.LTSleepNStorm.module.ConsoleModule;
 
 /**
  * 
@@ -18,29 +16,7 @@ import io.github.leothawne.LTSleepNStorm.module.ConsoleModule;
  * 
  */
 public final class LTSleepNStormAPI {
-	private LTSleepNStorm plugin;
-	private ConsoleModule console;
-	private FileConfiguration configuration;
-	private FileConfiguration language;
-	private MetricsAPI metrics;
-	private BukkitScheduler scheduler;
-	private int adTask;
-	/**
-	 * 
-	 * @deprecated There is no need to manually create
-	 * an object with this constructor when
-	 * you can easily use {@link LTSleepNStorm#getAPI()}.
-	 * 
-	 */
-	public LTSleepNStormAPI(final LTSleepNStorm plugin, final ConsoleModule console, final FileConfiguration configuration, final FileConfiguration language, final MetricsAPI metrics, final BukkitScheduler scheduler, final int adTask) {
-		this.plugin = plugin;
-		this.console = console;
-		this.configuration = configuration;
-		this.language = language;
-		this.metrics = metrics;
-		this.scheduler = scheduler;
-		this.adTask = adTask;
-	}
+	public LTSleepNStormAPI() {}
 	/**
 	 * 
 	 * Returns a boolean type value that can be used
@@ -56,17 +32,6 @@ public final class LTSleepNStormAPI {
 	}
 	/**
 	 * 
-	 * Returns a ConsoleLoader type value that can
-	 * be used to log messages on the server console.
-	 * 
-	 * @return A ConsoleLoader type value.
-	 * 
-	 */
-	public final ConsoleModule getConsoleSender() {
-		return this.console;
-	}
-	/**
-	 * 
 	 * Returns the default AFK
 	 * level defined in config.yml.
 	 * 
@@ -74,40 +39,7 @@ public final class LTSleepNStormAPI {
 	 * 
 	 */
 	public final int getDefaultAFKLevel(){
-		return this.configuration.getInt("auto-restmode");
-	}
-	/**
-	 * 
-	 * Returns a boolean type value that can be used to determine
-	 * if the plugin is currently using bStats.
-	 * 
-	 * @return A boolean type value.
-	 * 
-	 */
-	public final boolean isMetricsEnabled() {
-		return this.metrics.isEnabled();
-	}
-	/**
-	 * 
-	 * Returns a FileConfiguration type value that can be used to access
-	 * all configuration variables been used by the plugin.
-	 * 
-	 * @return A FileConfiguration type value.
-	 * 
-	 */
-	public final FileConfiguration getConfigurationMap() {
-		return this.configuration;
-	}
-	/**
-	 * 
-	 * Returns a FileConfiguration type value that can be used to access
-	 * all language variables been used by the plugin.
-	 * 
-	 * @return A FileConfiguration type value.
-	 * 
-	 */
-	public final FileConfiguration getLanguageMap() {
-		return this.language;
+		return LTSleepNStorm.getInstance().getConfiguration().getInt("auto-restmode");
 	}
 	/**
 	 * 
@@ -118,7 +50,7 @@ public final class LTSleepNStormAPI {
 	 * 
 	 */
 	public final void forceSleep(final Player player) {
-		if(NearbyMonstersAPI.isLocationSafe(player.getLocation())) SleepAPI.runSleep(this.plugin, this.configuration, this.language, null, player);
+		if(NearbyMonstersAPI.isLocationSafe(player.getLocation())) SleepAPI.runSleep(null, player);
 	}
 	/**
 	 * 
@@ -129,7 +61,7 @@ public final class LTSleepNStormAPI {
 	 * 
 	 */
 	public final void forceSleep(final UUID playerUUID) {
-		this.forceSleep(this.plugin.getServer().getPlayer(playerUUID));
+		this.forceSleep(Bukkit.getPlayer(playerUUID));
 	}
 	/**
 	 * 
@@ -140,7 +72,7 @@ public final class LTSleepNStormAPI {
 	 * 
 	 */
 	public final void forceSleep(final String playerName) {
-		this.forceSleep(this.plugin.getServer().getPlayer(playerName));
+		this.forceSleep(Bukkit.getPlayer(playerName));
 	}
 	/**
 	 * 
@@ -153,8 +85,8 @@ public final class LTSleepNStormAPI {
 	 */
 	public final void forceSleep(final Player player, final boolean ignoreNearbyMonsters) {
 		if(!ignoreNearbyMonsters) {
-			this.forceSleep(player);
-		} else SleepAPI.runSleep(this.plugin, this.configuration, this.language, null, player);
+			forceSleep(player);
+		} else SleepAPI.runSleep(null, player);
 	}
 	/**
 	 * 
@@ -166,7 +98,7 @@ public final class LTSleepNStormAPI {
 	 * 
 	 */
 	public final void forceSleep(final UUID playerUUID, final boolean ignoreNearbyMonsters) {
-		this.forceSleep(this.plugin.getServer().getPlayer(playerUUID), ignoreNearbyMonsters);
+		this.forceSleep(Bukkit.getPlayer(playerUUID), ignoreNearbyMonsters);
 	}
 	/**
 	 * 
@@ -178,19 +110,6 @@ public final class LTSleepNStormAPI {
 	 * 
 	 */
 	public final void forceSleep(final String playerName, final boolean ignoreNearbyMonsters) {
-		this.forceSleep(this.plugin.getServer().getPlayer(playerName), ignoreNearbyMonsters);
-	}
-	/**
-	 * 
-	 * @deprecated For development mode only.
-	 * 
-	 */
-	public final boolean cancelAdTask() {
-		if(this.scheduler.isCurrentlyRunning(this.adTask) || this.scheduler.isQueued(this.adTask)) {
-			this.scheduler.cancelTask(this.adTask);
-			this.console.warning("Task #" + this.adTask + " cancelled (using LTSleepNStorm API).");
-			return true;
-		}
-		return false;
+		this.forceSleep(Bukkit.getPlayer(playerName), ignoreNearbyMonsters);
 	}
 }

@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2019 Murilo Amaral Nappi
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
 package io.github.leothawne.LTSleepNStorm.listener;
 
 import org.bukkit.ChatColor;
@@ -23,7 +7,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Bed;
 import org.bukkit.block.data.type.Bed.Part;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -37,14 +20,7 @@ import io.github.leothawne.LTSleepNStorm.api.NearbyMonstersAPI;
 import io.github.leothawne.LTSleepNStorm.api.SleepAPI;
 
 public final class BedListener implements Listener {
-	private LTSleepNStorm plugin;
-	private FileConfiguration configuration;
-	private FileConfiguration language;
-	public BedListener(final LTSleepNStorm plugin, final FileConfiguration configuration, final FileConfiguration language) {
-		this.plugin = plugin;
-		this.configuration = configuration;
-		this.language = language;
-	}
+	public BedListener() {}
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public final void onPlayerInteract(final PlayerInteractEvent event) {
 		final Player player = event.getPlayer();
@@ -96,14 +72,14 @@ public final class BedListener implements Listener {
 				if(!isObstructed) {
 					if(player.getLocation().distance(block.getLocation()) <= 3.3) {
 						if(NearbyMonstersAPI.isLocationSafe(block.getLocation())) {
-							SleepAPI.runSleep(this.plugin, this.configuration, this.language, block, player);
+							SleepAPI.runSleep(block, player);
 						} else {
-							player.sendMessage(ChatColor.AQUA + "[" + this.plugin.getDescription().getName() + "] " + ChatColor.YELLOW + this.language.getString("nearby-monsters"));
+							player.sendMessage(ChatColor.AQUA + "[LTSNS] " + ChatColor.YELLOW + LTSleepNStorm.getInstance().getLanguage().getString("nearby-monsters"));
 							event.setCancelled(true);
 						}
 					}
 				} else {
-					player.sendMessage(ChatColor.AQUA + "[" + this.plugin.getDescription().getName() + "] " + ChatColor.YELLOW + this.language.getString("bed-obstructed"));
+					player.sendMessage(ChatColor.AQUA + "[LTSNS] " + ChatColor.YELLOW + LTSleepNStorm.getInstance().getLanguage().getString("bed-obstructed"));
 					event.setCancelled(true);
 				}
 			}

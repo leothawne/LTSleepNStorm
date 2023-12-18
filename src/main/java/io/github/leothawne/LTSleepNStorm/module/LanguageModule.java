@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2019 Murilo Amaral Nappi
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
 package io.github.leothawne.LTSleepNStorm.module;
 
 import java.io.File;
@@ -27,34 +11,33 @@ import io.github.leothawne.LTSleepNStorm.LTSleepNStorm;
 import io.github.leothawne.LTSleepNStorm.type.VersionType;
 
 public final class LanguageModule {
-	public static final void preLoad(final LTSleepNStorm plugin, final ConsoleModule console, final FileConfiguration configuration) {
-		final File languageFile = new File(plugin.getDataFolder(), configuration.getString("language") + ".yml");
+	public static final void preLoad() {
+		final File languageFile = new File(LTSleepNStorm.getInstance().getDataFolder(), LTSleepNStorm.getInstance().getConfiguration().getString("language") + ".yml");
 		if(!languageFile.exists()) {
-			console.info("Creating " + configuration.getString("language") + ".yml...");
-			if(configuration.getString("language").equalsIgnoreCase("english") || configuration.getString("language").equalsIgnoreCase("portuguese")) {
-				plugin.saveResource(configuration.getString("language") + ".yml", false);
-				console.info("Done!");
-			} else console.severe(configuration.getString("language") + " is not supported yet. I suggest you to manually create a new file named " + configuration.getString("language") + ".yml and manually create the desired translation.");
+			LTSleepNStorm.getInstance().getConsole().info("Creating " + LTSleepNStorm.getInstance().getConfiguration().getString("language") + ".yml...");
+			if(LTSleepNStorm.getInstance().getConfiguration().getString("language").equalsIgnoreCase("english") || LTSleepNStorm.getInstance().getConfiguration().getString("language").equalsIgnoreCase("portuguese")) {
+				LTSleepNStorm.getInstance().saveResource(LTSleepNStorm.getInstance().getConfiguration().getString("language") + ".yml", false);
+				LTSleepNStorm.getInstance().getConsole().info("Done!");
+			} else LTSleepNStorm.getInstance().getConsole().severe(LTSleepNStorm.getInstance().getConfiguration().getString("language") + " is not supported yet. I suggest you to manually create a new file named " + LTSleepNStorm.getInstance().getConfiguration().getString("language") + ".yml and manually create the desired translation.");
 		}
 	}
-	public static final FileConfiguration load(final LTSleepNStorm plugin, final ConsoleModule console, final FileConfiguration configuration) {
-		final File languageFile = new File(plugin.getDataFolder(), configuration.getString("language") + ".yml");
+	public static final FileConfiguration load() {
+		final File languageFile = new File(LTSleepNStorm.getInstance().getDataFolder(), LTSleepNStorm.getInstance().getConfiguration().getString("language") + ".yml");
 		if(languageFile.exists()) {
 			final FileConfiguration languageConfig = new YamlConfiguration();
 			try {
 				languageConfig.load(languageFile);
-				console.info("Loaded " + configuration.getString("language") + ".yml.");
+				LTSleepNStorm.getInstance().getConsole().info("Loaded " + LTSleepNStorm.getInstance().getConfiguration().getString("language") + ".yml.");
 				int languageVersion = 0;
-				if(configuration.getString("language").equalsIgnoreCase("english")) languageVersion = Integer.parseInt(DataModule.getVersion(VersionType.ENGLISH_YML));
-				if(configuration.getString("language").equalsIgnoreCase("portuguese")) languageVersion = Integer.parseInt(DataModule.getVersion(VersionType.PORTUGUESE_YML));
-				if(languageVersion != 0) if(languageConfig.getInt("language-version") != languageVersion) console.severe(configuration.getString("language") + ".yml outdated. Delete it and restart the server.");
+				if(LTSleepNStorm.getInstance().getConfiguration().getString("language").equalsIgnoreCase("english")) languageVersion = Integer.parseInt(DataModule.getVersion(VersionType.ENGLISH_YML));
+				if(LTSleepNStorm.getInstance().getConfiguration().getString("language").equalsIgnoreCase("portuguese")) languageVersion = Integer.parseInt(DataModule.getVersion(VersionType.PORTUGUESE_YML));
+				if(languageVersion != 0) if(languageConfig.getInt("language-version") != languageVersion) LTSleepNStorm.getInstance().getConsole().severe(LTSleepNStorm.getInstance().getConfiguration().getString("language") + ".yml outdated. Delete it and restart the server.");
 				return languageConfig;
 			} catch(final IOException | InvalidConfigurationException exception) {
 				exception.printStackTrace();
 			}
-			return null;
 		}
-		console.severe(configuration.getString("language") + ".yml is missing.");
+		LTSleepNStorm.getInstance().getConsole().severe(LTSleepNStorm.getInstance().getConfiguration().getString("language") + ".yml is missing.");
 		return null;
 	}
 }

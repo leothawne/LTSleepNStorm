@@ -51,9 +51,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class MetricsAPI {
 
-  private Plugin plugin;
+  private final Plugin plugin;
 
-  private MetricsBase metricsBase;
+  private final MetricsBase metricsBase;
 
   /**
    * Creates a new Metrics instance.
@@ -62,7 +62,6 @@ public class MetricsAPI {
    * @param serviceId The id of the service. It can be found at <a
    *     href="https://bstats.org/what-is-my-plugin-id">What is my plugin id?</a>
    */
-  @SuppressWarnings("deprecation")
 public MetricsAPI(JavaPlugin plugin, int serviceId) {
     this.plugin = plugin;
     // Get the config file
@@ -880,8 +879,5 @@ public MetricsAPI(JavaPlugin plugin, int serviceId) {
         return value;
       }
     }
-  }
-  public boolean isEnabled() {
-	  return metricsBase.enabled;
   }
 }
